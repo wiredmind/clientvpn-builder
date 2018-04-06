@@ -12,7 +12,7 @@ If you don’t specify `Path` the resulting batch file will be saved in subdirec
 In addition to specifying parameters on the command line, this tool takes input from the pipeline, which allows it to read required parameters from a text file, CSV file, even SQL database. It can be completely automated.
 
 ## Examples
-Import entries from CSV file and pipe to BuildVpnClientConfig.ps1. Check out `clientlist.csv` for reference.
+Import entries from CSV file and pipe to BuildVpnClientConfig.ps1. Check out `examples\clientlist.csv` for reference.
 ```
 Import-Csv .\examples\clientlist.csv | .\BuildVpnClientConfig.ps1
 ```
