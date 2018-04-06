@@ -23,6 +23,7 @@
 	.PARAMETER Path
 		The destination folder for the distributable batch file, default $PSSCriptRoot\dist
 #>
+[CmdletBinding()]
 param
 (
 	[parameter(Position = 0,
@@ -45,8 +46,11 @@ param
 	[string]$Path = (Join-Path -Path $PSScriptRoot -ChildPath 'dist')
 )
 
+begin { }
 
-$installScript = @"
+process
+{
+	$installScript = @"
 try { Remove-VpnConnection -Name "$Name" -ErrorAction Stop -Force }
 catch {}
 finally
@@ -54,11 +58,11 @@ finally
 	Add-VpnConnection -Name "$Name" -ServerAddress "$ServerAddress" -TunnelType L2tp -L2tpPsk "$PreSharedKey" -AuthenticationMethod Pap -EncryptionLevel Optional -Force -WarningAction SilentlyContinue
 }
 "@
-
-$bytes = [System.Text.Encoding]::Unicode.GetBytes($installScript)
-$encodedCommand = [System.Convert]::ToBase64String($bytes)
-
-$executionCommand = @"
+	
+	$bytes = [System.Text.Encoding]::Unicode.GetBytes($installScript)
+	$encodedCommand = [System.Convert]::ToBase64String($bytes)
+	
+	$executionCommand = @"
 @echo off
 setlocal enabledelayedexpansion
 cls
@@ -70,13 +74,16 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -NoProfile -Enc {0}
 
 Exit %ERRORLEVEL%
 "@ -f $encodedCommand
-
-if (-not (Test-Path -LiteralPath $Path))
-{
-	New-Item -Path $Path -Type Directory -Force | Out-Null
+	
+	if (-not (Test-Path -LiteralPath $Path))
+	{
+		New-Item -Path $Path -Type Directory -Force | Out-Null
+	}
+	
+	$filePath = (Join-Path -Path $PSScriptRoot `
+						   -ChildPath "$Path\ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
+	
+	$executionCommand | Out-File -FilePath $filePath -Encoding ascii -Force
 }
 
-$filePath = (Join-Path -Path $PSScriptRoot `
-	-ChildPath "$Path\ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
-
-$executionCommand | Out-File -FilePath $filePath -Encoding ascii -Force
+end {}
