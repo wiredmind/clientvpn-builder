@@ -1,4 +1,4 @@
-﻿<#	
+<#	
 	.NOTES
 	===========================================================================
 	 Created on:   	4/3/2018 1:05 AM
@@ -54,10 +54,9 @@ finally
 	Add-VpnConnection -Name "$Name" -ServerAddress "$ServerAddress" -TunnelType L2tp -L2tpPsk "$PreSharedKey" -AuthenticationMethod Pap -EncryptionLevel Optional -Force -WarningAction SilentlyContinue
 }
 "@
-	
-	
-	$bytes = [System.Text.Encoding]::Unicode.GetBytes($installScript)
-	$encodedCommand = [System.Convert]::ToBase64String($bytes)
+
+$bytes = [System.Text.Encoding]::Unicode.GetBytes($installScript)
+$encodedCommand = [System.Convert]::ToBase64String($bytes)
 
 $executionCommand = @"
 @echo off
