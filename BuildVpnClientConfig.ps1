@@ -77,6 +77,6 @@ if (-not (Test-Path -LiteralPath $Path))
 }
 
 $filePath = (Join-Path -Path $PSScriptRoot `
-					   -ChildPath "$Path\ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
+	-ChildPath "$Path\ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
 
 $executionCommand | Out-File -FilePath $filePath -Encoding ascii -Force
