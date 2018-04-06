@@ -7,7 +7,7 @@
 	 Filename:     	BuildVpnClientConfig.ps1
 	===========================================================================
 	.DESCRIPTION
-		Tool that builds a batch file with encoded PowerShell command. 
+		Tool that builds a batch file to execute encoded PowerShell command. 
 		Resulting batch file can be run on client workstation to automatically
 		configure Built-in VPN client on Windows 8.1/2012R2 and higher machines.
 
@@ -81,7 +81,7 @@ Exit %ERRORLEVEL%
 	}
 	
 	$filePath = (Join-Path -Path $PSScriptRoot `
-						   -ChildPath "$Path\ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
+		-ChildPath "$Path\ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
 	
 	$executionCommand | Out-File -FilePath $filePath -Encoding ascii -Force
 }
