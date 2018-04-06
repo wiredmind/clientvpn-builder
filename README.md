@@ -2,7 +2,7 @@
 # 🔧 ClientVPNBuilder
 
 ## Description 
-PowerShell tool that builds a batch file with encoded PowerShell command. Resulting batch can be run on client workstation to automatically configure Built-in VPN client on machines running Windows 8.1/2012R2 and better.
+PowerShell tool that builds a batch file with encoded PowerShell command. Resulting batch can be run on client workstation to automatically configure—Cisco Meraki Client VPN compatible—Built-in VPN client on machines running Windows 8.1/2012R2 and better.
 
 This is PowerShell, run from PowerShell 😉
 
