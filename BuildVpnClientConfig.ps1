@@ -32,35 +32,35 @@
 [CmdletBinding()]
 param
 (
-	[parameter(Position = 0,
-			   Mandatory = $true,
-			   ValueFromPipeline = $true,
-			   ValueFromPipelineByPropertyName = $true)]
-	[string]$Name,
-	[parameter(Position = 1,
-			   Mandatory = $true,
-			   ValueFromPipeline = $true,
-			   ValueFromPipelineByPropertyName = $true)]
-	[string]$ServerAddress,
-	[parameter(Position = 2,
-			   Mandatory = $true,
-			   ValueFromPipeline = $true,
-			   ValueFromPipelineByPropertyName = $true)]
-	[string]$PreSharedKey,
-	[Parameter(Position = 3,
-			   ValueFromPipelineByPropertyName)]
-	[string]$Path = "$PSScriptRoot\dist",
-	[Parameter(Position = 4,
-			   ValueFromPipeline = $true,
-			   ValueFromPipelineByPropertyName = $true)]
-	[switch]$AllUsers
+  [parameter(Position = 0,
+             Mandatory = $true,
+             ValueFromPipeline = $true,
+             ValueFromPipelineByPropertyName = $true)]
+  [string]$Name,
+  [parameter(Position = 1,
+             Mandatory = $true,
+             ValueFromPipeline = $true,
+             ValueFromPipelineByPropertyName = $true)]
+  [string]$ServerAddress,
+  [parameter(Position = 2,
+             Mandatory = $true,
+             ValueFromPipeline = $true,
+             ValueFromPipelineByPropertyName = $true)]
+  [string]$PreSharedKey,
+  [Parameter(Position = 3,
+             ValueFromPipelineByPropertyName)]
+  [string]$Path = "$PSScriptRoot\dist",
+  [Parameter(Position = 4,
+             ValueFromPipeline = $true,
+             ValueFromPipelineByPropertyName = $true)]
+  [switch]$AllUsers
 )
 
-begin {}
+begin { }
 
 process
 {
-	$installScript = @"
+  $installScript = @"
 try { Remove-VpnConnection -Name "$Name" -ErrorAction Stop -Force }
 catch { }
 finally
@@ -76,11 +76,11 @@ finally
 		-WarningAction SilentlyContinue
 }
 "@ -creplace '(?m)^\s*\r?\n', ''
-	
-	$bytes = [System.Text.Encoding]::Unicode.GetBytes($installScript)
-	$encodedCommand = [System.Convert]::ToBase64String($bytes)
-	
-	$executionCommand = @"
+  
+  $bytes = [System.Text.Encoding]::Unicode.GetBytes($installScript)
+  $encodedCommand = [System.Convert]::ToBase64String($bytes)
+  
+  $executionCommand = @"
 @echo off
 setlocal enabledelayedexpansion
 cls
@@ -92,18 +92,18 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -NoProfile -Enc $encod
 
 Exit %ERRORLEVEL%
 "@
-	
-	if (-not (Test-Path -Path $Path))
-	{
-		New-Item -Path $Path `
-				 -Type Directory `
-				 -Force | Out-Null
-	}
-	
-	$filePath = (Join-Path -Path $Path `
-						   -ChildPath "ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
-	
-	$executionCommand | Out-File -FilePath $filePath -Encoding ascii -Force
+  
+  if (-not (Test-Path -Path $Path))
+  {
+    New-Item -Path $Path `
+             -Type Directory `
+             -Force | Out-Null
+  }
+  
+  $filePath = (Join-Path -Path $Path `
+                         -ChildPath "ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
+  
+  $executionCommand | Out-File -FilePath $filePath -Encoding ascii -Force
 }
 
 end { }
