@@ -61,6 +61,7 @@ begin { }
 process
 {
   $installScript = @"
+#Requires -Version 4 
 try { Remove-VpnConnection -Name "$Name" -ErrorAction Stop -Force }
 catch { }
 finally
