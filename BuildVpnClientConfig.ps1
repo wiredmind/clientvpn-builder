@@ -27,7 +27,7 @@
 		The destination folder for the distributable batch file, default: '$PSSCriptRoot\dist'
 
 	.PARAMETER AllUsers
-		If specified builds VPN configuration for all users on workstaion
+		If specified builds VPN configuration for all users on the computer
 #>
 [CmdletBinding()]
 param
