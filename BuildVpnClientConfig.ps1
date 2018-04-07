@@ -6,22 +6,28 @@
 	 Organization: 	LISS Group
 	 Filename:     	BuildVpnClientConfig.ps1
 	===========================================================================
+	.SYNOPSIS
+		Build Windows Built-in VPN configuration batch file.		
+
 	.DESCRIPTION
 		Tool that builds a batch file to execute encoded PowerShell command. 
 		Resulting batch file can be run on client workstation to automatically
 		configure Built-in VPN client on Windows 8.1/2012R2 and higher machines.
 
 	.PARAMETER Name
-		The name to use for VPN Connection
+		The name to use for VPN Connection.
 	
 	.PARAMETER ServerAddress
-		The DNS name or IP Address of the VPN server for this connection
+		The DNS name or IP Address of the VPN server for this connection.
 
 	.PARAMETER PreSharedKey
-		The PreSharedKey to be used for L2TP authentication
+		The PreSharedKey to be used for L2TP authentication.
 
 	.PARAMETER Path
-		The destination folder for the distributable batch file, default $PSSCriptRoot\dist
+		The destination folder for the distributable batch file, default: '$PSSCriptRoot\dist'
+
+	.PARAMETER AllUsers
+		If specified builds VPN configuration for all users on workstaion
 #>
 [CmdletBinding()]
 param
