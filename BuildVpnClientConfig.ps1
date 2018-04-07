@@ -43,21 +43,33 @@ param
 	[string]$PreSharedKey,
 	[Parameter(Position = 3,
 			   ValueFromPipelineByPropertyName)]
-	[string]$Path = (Join-Path -Path $PSScriptRoot -ChildPath 'dist')
+	[string]$Path = "$PSScriptRoot\dist",
+	[Parameter(Position = 4,
+			   ValueFromPipeline = $true,
+			   ValueFromPipelineByPropertyName = $true)]
+	[switch]$AllUsers
 )
 
-begin { }
+begin {}
 
 process
 {
 	$installScript = @"
 try { Remove-VpnConnection -Name "$Name" -ErrorAction Stop -Force }
-catch {}
+catch { }
 finally
 {
-	Add-VpnConnection -Name "$Name" -ServerAddress "$ServerAddress" -TunnelType L2tp -L2tpPsk "$PreSharedKey" -AuthenticationMethod Pap -EncryptionLevel Optional -Force -WarningAction SilentlyContinue
+	Add-VpnConnection -Name "$Name" ``
+		-ServerAddress "$ServerAddress" ``
+		-TunnelType L2tp ``
+		-L2tpPsk "$PreSharedKey" ``
+		-AuthenticationMethod Pap ``
+		-EncryptionLevel Optional ``
+		$(if ($AllUsers) { '-AllUserConnection `' })
+		-Force ``
+		-WarningAction SilentlyContinue
 }
-"@
+"@ -creplace '(?m)^\s*\r?\n', ''
 	
 	$bytes = [System.Text.Encoding]::Unicode.GetBytes($installScript)
 	$encodedCommand = [System.Convert]::ToBase64String($bytes)
@@ -70,20 +82,22 @@ mode con:cols=80 lines=22
 color 0F
 
 :: Execute encoded PowerShell command
-C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -NoProfile -Enc {0}
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -NoProfile -Enc $encodedCommand
 
 Exit %ERRORLEVEL%
-"@ -f $encodedCommand
+"@
 	
-	if (-not (Test-Path -LiteralPath $Path))
+	if (-not (Test-Path -Path $Path))
 	{
-		New-Item -Path $Path -Type Directory -Force | Out-Null
+		New-Item -Path $Path `
+				 -Type Directory `
+				 -Force | Out-Null
 	}
 	
-	$filePath = (Join-Path -Path $PSScriptRoot `
-		-ChildPath "$Path\ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
+	$filePath = (Join-Path -Path $Path `
+						   -ChildPath "ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
 	
 	$executionCommand | Out-File -FilePath $filePath -Encoding ascii -Force
 }
 
-end {}
+end { }
