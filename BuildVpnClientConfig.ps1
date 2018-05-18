@@ -35,11 +35,11 @@
 
 	.PARAMETER AuthenticationMethod
     Specifies the authentication method to use for the VPN connection. The acceptable values for this parameter are:
-                                                                                                                    
-    -- PAP                                                                                                          
-    -- CHAP                                                                                                         
-    -- MSCHAPv2                                                                                                     
-    -- EAP                                                                                                          
+    
+    -- PAP
+    -- CHAP
+    -- MSCHAPv2
+    -- EAP
 
 	.PARAMETER EncryptionLevel
     Specifies the encryption level for the VPN connection. The acceptable values for this parameter are:
@@ -117,7 +117,7 @@ param
   [Parameter(Position = 8,
              ValueFromPipeline = $true,
              ValueFromPipelineByPropertyName = $true)]
-  [switch]$SplitTunneling,
+  [string]$SplitTunneling,
 
   [Parameter(Position = 9,
              ValueFromPipeline = $true,
@@ -177,21 +177,20 @@ mode con:cols=80 lines=22
 color 0F
 
 :: Execute encoded PowerShell command
-C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -NoProfile -Enc $encodedCommand
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -NoLogo -NoProfile -Enc $encodedCommand
 
-Exit %ERRORLEVEL%
+0<BS>dExit %ERRORLEVEL%
 "@
   
   if (-not (Test-Path -Path $Path))
   {
-    New-Item -Path $Path `
-             -Type Directory `
-             -Force | Out-Null
+    New-Item -Path $Path -Type Directory -Force | Out-Null
   }
-  
-  $filePath = (Join-Path -Path $Path `
-                         -ChildPath "ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd")
-  
+  $filePathArgs = @{
+      Path = $Path
+      ChildPath = "ConfigureVpnClient_$($Name.Replace(" ", "-")).cmd"
+  }
+  $filePath = Join-Path @filePathArgs
   $executionCommand | Out-File -FilePath $filePath -Encoding ascii -Force
 }
 

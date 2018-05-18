@@ -1,3 +1,3 @@
-Name,ServerAddress,PreSharedKey,Path
-The Roman Empire VPN,vpn.rome.com,veritas-NUMQUAM-perit-&%#DC,ClientVPN
-Galaxy Far Away VPN,vpn.andromeda-galaxy.com,*36+dusk+EACH+malta+MANY+33*,dist\Andromeda\ClientVPN
+Name,ServerAddress,PreSharedKey,TunnelType,AuthenticationMethod,EncryptionLevel,AllUserConnection,SplitTunneling,DnsSuffix,RememberCredential,UseWinlogonCredential,Path
+The Roman Empire VPN,vpn.rome.com,veritas-NUMQUAM-perit-&%#DC,,,,1,,corp.rome.com,,,ClientVPN
+Galaxy Far Away VPN,vpn.andromeda-galaxy.com,*36+dusk+EACH+malta+MANY+33*,,,,,1,corp.andromeda-galaxy.com,1,,dist\Andromeda\ClientVPN
