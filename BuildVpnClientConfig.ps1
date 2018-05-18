@@ -7,12 +7,12 @@
 	 Filename:	BuildVpnClientConfig.ps1
 	===========================================================================
 	.SYNOPSIS
-		Build Windows Built-in VPN configuration batch file.		
+	Build Windows Built-in VPN configuration batch file.		
 
 	.DESCRIPTION
-		Tool that builds a batch file to execute encoded PowerShell command. 
-		Resulting batch file can be run on client workstation to automatically
-		configure Built-in VPN client on Windows 8.1/2012R2 and higher machines.
+	Tool that builds a batch file to execute encoded PowerShell command. 
+	Resulting batch file can be run on client workstation to automatically
+	configure Built-in VPN client on Windows 8.1/2012R2 and higher machines.
 
 	.PARAMETER Name
         Specifies the name of this VPN connection profile.
@@ -74,7 +74,7 @@
         with this VPN connection profile.
 
 	.PARAMETER Path
-		Specifies the destination folder for the distributable batch file, default: '$PSSCriptRoot\dist'
+	Specifies the destination folder for the distributable batch file, default: '$PSSCriptRoot\dist'
 #>
 [CmdletBinding()]
 param
