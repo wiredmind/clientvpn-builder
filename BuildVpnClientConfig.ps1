@@ -15,60 +15,63 @@
 		configure Built-in VPN client on Windows 8.1/2012R2 and higher machines.
 
 	.PARAMETER Name
-    Specifies the name of this VPN connection profile.
+        Specifies the name of this VPN connection profile.
 	
 	.PARAMETER ServerAddress
-    Specifies the address of the remote VPN server to which the client connects.
-    You can specify the address as a URL, an IPv4 address, or an IPv6 address.
+        Specifies the address of the remote VPN server to which the client connects.
+        You can specify the address as a URL, an IPv4 address, or an IPv6 address.
 
 	.PARAMETER PreSharedKey
-    Specifies the value of the PSK to be used for L2TP authentication.
+        Specifies the value of the PSK to be used for L2TP authentication.
 
 	.PARAMETER TunnelType
-    Specifies the type of tunnel used for the VPN connection. The acceptable values for this parameter are:
+        Specifies the type of tunnel used for the VPN connection.
+        The acceptable values for this parameter are:
 
-    -- PPTP
-    -- L2TP
-    -- SSTP
-    -- IKEv2
-    -- Automatic
+        -- PPTP
+        -- L2TP
+        -- SSTP
+        -- IKEv2
+        -- Automatic
 
 	.PARAMETER AuthenticationMethod
-    Specifies the authentication method to use for the VPN connection. The acceptable values for this parameter are:
+        Specifies the authentication method to use for the VPN connection.
+        The acceptable values for this parameter are:
     
-    -- PAP
-    -- CHAP
-    -- MSCHAPv2
-    -- EAP
+        -- PAP
+        -- CHAP
+        -- MSCHAPv2
+        -- EAP
 
 	.PARAMETER EncryptionLevel
-    Specifies the encryption level for the VPN connection. The acceptable values for this parameter are:
+        Specifies the encryption level for the VPN connection.
+        The acceptable values for this parameter are:
 
-    -- NoEncryption
-    -- Optional
-    -- Required
-    -- Maximum
+        -- NoEncryption
+        -- Optional
+        -- Required
+        -- Maximum
 
 	.PARAMETER AllUserConnection
-    Indicates that the cmldet adds the VPN connection to the global phone book entries.
+        Indicates that the cmldet adds the VPN connection to the global phone book entries.
 
 	.PARAMETER SplitTunneling
-    Indicates that the cmdlet enables split tunneling for this VPN connection profile.
-    When you enable split tunneling, traffic to destinations outside the intranet
-    does not flow through the VPN tunnel. If you do not specify this parameter split
-    tunneling is disabled.
+        Indicates that the cmdlet enables split tunneling for this VPN connection profile.
+        When you enable split tunneling, traffic to destinations outside the intranet
+        does not flow through the VPN tunnel. If you do not specify this parameter split
+        tunneling is disabled.
 
 	.PARAMETER DnsSuffix
-    Specifies the DNS suffix of the VPN connection.
+        Specifies the DNS suffix of the VPN connection.
 
 	.PARAMETER RememberCredential
-    Indicates that the credentials supplied at the time of first successful
-    connection are stored in the cache.
+        Indicates that the credentials supplied at the time of first successful
+        connection are stored in the cache.
 
 	.PARAMETER UseWinlogonCredential
-    Indicates that MSCHAPv2 or EAP MSCHAPv2 is used as the authentication method,
-    and that Windows logon credentials are used automatically when connecting
-    with this VPN connection profile.
+        Indicates that MSCHAPv2 or EAP MSCHAPv2 is used as the authentication method,
+        and that Windows logon credentials are used automatically when connecting
+        with this VPN connection profile.
 
 	.PARAMETER Path
 		Specifies the destination folder for the distributable batch file, default: '$PSSCriptRoot\dist'
@@ -179,7 +182,7 @@ color 0F
 :: Execute encoded PowerShell command
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE -NoLogo -NoProfile -Enc $encodedCommand
 
-0<BS>dExit %ERRORLEVEL%
+Exit %ERRORLEVEL%
 "@
   
   if (-not (Test-Path -Path $Path))
